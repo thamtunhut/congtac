@@ -14,14 +14,18 @@ suất ăn. Deploy tại repo GitHub `thamtunhut/congtac` (public) — không c�
   `index.html` link tới bằng đường dẫn tương đối. **Luôn giữ thư mục này đi cùng
   index.html**, không đổi tên file trong này trừ khi cũng sửa lại `TICKETS[].file`
   trong JS.
-- `Hướng dẫn xuất hóa đơn di chuyển/` — nguồn cho tab "Hóa đơn": 1 file PDF (được
-  commit, link tải trong tab) + 10 ảnh chụp màn hình gốc dùng để dựng PDF đó (KHÔNG
-  commit, xem `.gitignore`, vì nội dung đã có đủ trong PDF). Nội dung tab "Hóa đơn"
-  (2 app Green SM/Be, bảng pháp nhân VNG Group/VNGGames/Talentnet) được gõ tay
-  thẳng vào HTML trong `<section id="panel-invoice">`, không phải data-driven như
-  các tab khác — nếu quy trình app đổi hoặc thêm pháp nhân mới, sửa trực tiếp HTML
-  ở đó (đọc lại PDF/ảnh gốc hoặc link Canva `https://canva.link/6onofzpi71emv0c`
-  nếu anh Vinh gửi bản cập nhật).
+- `Hướng dẫn xuất hóa đơn di chuyển/` — nguồn cho tab "Hóa đơn": 1 file PDF + 10
+  ảnh chụp màn hình gốc, **tất cả đều được commit** (ảnh dùng làm minh họa từng
+  bước ngay trong tab). Thứ tự ảnh khớp với từng bước nằm trong
+  `GREENSM_STEPS`/`BE_STEPS` (biến JS cuối file, xem mục dưới) — đã đối chiếu thủ
+  công từng ảnh với PDF, không suy đoán theo tên file. File PDF vẫn nằm trong repo
+  nhưng **không còn nút tải/link nào trỏ tới nó trên trang** (đã bị yêu cầu bỏ nút
+  "Tải hướng dẫn đầy đủ (PDF)" và nút "Xem trên Canva" — đừng thêm lại 2 nút này
+  trừ khi được yêu cầu). Bảng pháp nhân (VNG Group/VNGGames) gõ tay thẳng vào HTML
+  trong `<section id="panel-invoice">`, không phải data-driven — nếu quy trình app
+  đổi hoặc thêm pháp nhân mới, sửa trực tiếp ở đó (đọc lại PDF/ảnh gốc hoặc link
+  Canva `https://canva.link/6onofzpi71emv0c` nếu anh Vinh gửi bản cập nhật). Mục
+  "Talentnet (TBU)" đã bị bỏ theo yêu cầu — đừng thêm lại trừ khi được yêu cầu.
 - `Games ON_ Travel & Accommodation CTS.xlsx` — file Excel nguồn (KHÔNG commit lên
   git, xem `.gitignore`) do anh Vinh (VinhHP2) cập nhật. Có 3 sheet:
   - `Plan công tác` — danh sách người đi, ngày đi/về, check-in/out khách sạn.
@@ -56,6 +60,11 @@ suất ăn. Deploy tại repo GitHub `thamtunhut/congtac` (public) — không c�
   hiện số thật thay vì "TBU".
 - `MEAL_DAYS` / `MEALS` — ma trận suất ăn, key theo domain (đúng domain trong cột
   `Domain` của Excel, kể cả domain có dấu gạch ngang như `"V-ngangt"`).
+- `GREENSM_STEPS` / `BE_STEPS` — nội dung tab "Hóa đơn": mỗi bước có `img` (tên
+  file ảnh trong `Hướng dẫn xuất hóa đơn di chuyển/`), `txt` (caption), `sub`
+  (optional, ghi chú nhỏ). Lưu ý: ảnh chụp màn hình gốc có hiện email cá nhân
+  (`hpvinh96@gmail.com`) và 4 số cuối thẻ Visa của anh Vinh (dùng để demo) — nếu
+  anh Vinh yêu cầu che/thay ảnh khác thì cần chỉnh sửa ảnh gốc rồi thay file.
 
 ## Quy ước đã thống nhất với anh Vinh (đừng đổi lại nếu không được yêu cầu)
 
@@ -79,7 +88,13 @@ suất ăn. Deploy tại repo GitHub `thamtunhut/congtac` (public) — không c�
 
 ## Deploy
 
-Repo GitHub: `https://github.com/thamtunhut/congtac` (public, branch `main`).
-Push trực tiếp `index.html` + thư mục `Vé máy bay/` là đủ để trang chạy được (ví dụ
-qua GitHub Pages, Netlify, Cloudflare Pages — trỏ root vào file `index.html`, không
-cần build command).
+Repo GitHub: `https://github.com/thamtunhut/congtac` (public, branch `main`), đã
+gắn domain riêng `congtac.vinhhp2.site` qua file `CNAME` (do anh Vinh tự thêm qua
+GitHub web, không phải mình tạo). Push trực tiếp `index.html` + thư mục
+`Vé máy bay/` là đủ để trang chạy được qua GitHub Pages.
+
+**QUAN TRỌNG: KHÔNG tự ý `git commit`/`git push` lên GitHub khi chưa được anh Vinh
+yêu cầu rõ ràng trong lượt chat đó.** Cứ sửa file và để đó (commit cục bộ nếu cần
+theo dõi, nhưng đừng push) — chỉ push khi anh Vinh nói thẳng kiểu "push lên đi",
+"đẩy lên github", v.v. Yêu cầu push một lần không có nghĩa được phép tự push cho
+các thay đổi ở lượt chat sau.
