@@ -342,6 +342,63 @@ tr.total-row td{font-weight:700;background:var(--bg);}
 .meal-legend{display:flex;gap:18px;margin-bottom:14px;font-size:13px;color:var(--muted);align-items:center;}
 .meal-legend .item{display:flex;align-items:center;gap:6px;}
 
+.entity-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px;margin-bottom:22px;}
+.entity-card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:16px 18px;
+}
+.entity-card .tag{
+  font-size:11px;
+  font-weight:700;
+  color:var(--teal-dark);
+  background:var(--teal-light);
+  padding:3px 10px;
+  border-radius:999px;
+}
+.entity-card.tbu .tag{color:var(--amber);background:#fef4e2;}
+.entity-card h4{margin:10px 0 4px;font-size:15px;}
+.entity-card .addr{font-size:13px;color:var(--muted);line-height:1.45;}
+.entity-card .mst{margin-top:10px;font-size:13px;}
+.entity-card .mst b{font-family:Consolas,Menlo,monospace;background:var(--bg);padding:2px 7px;border-radius:6px;}
+
+.app-guide{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:18px 20px;
+  margin-bottom:16px;
+}
+.app-guide-head{display:flex;align-items:center;gap:10px;}
+.app-guide-head .app-icon{
+  width:34px;height:34px;border-radius:9px;
+  display:flex;align-items:center;justify-content:center;
+  font-weight:700;color:#fff;font-size:13px;
+}
+.app-guide-head h3{margin:0;font-size:16px;}
+.steps-row{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+  gap:10px;
+  margin-top:14px;
+}
+.step-chip{
+  background:var(--bg);
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:12px 14px;
+}
+.step-chip .num{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:22px;height:22px;border-radius:50%;
+  background:var(--teal);color:#fff;font-size:12px;font-weight:700;
+  margin-bottom:8px;
+}
+.step-chip .txt{font-size:13px;font-weight:600;line-height:1.35;}
+.step-chip .sub{font-size:11.5px;color:var(--muted);margin-top:3px;}
+.invoice-links{display:flex;gap:10px;flex-wrap:wrap;margin-top:6px;}
+
 footer{
   text-align:center;
   padding:28px 20px 40px;
@@ -375,6 +432,7 @@ footer{
     <button class="tab-btn" data-tab="hotel">Khách sạn</button>
     <button class="tab-btn" data-tab="flights">Vé máy bay</button>
     <button class="tab-btn" data-tab="meals">Ăn uống</button>
+    <button class="tab-btn" data-tab="invoice">Hóa đơn</button>
   </div>
 </div>
 
@@ -460,6 +518,66 @@ footer{
     </div>
     <div class="meal-table-wrap">
       <table class="meal" id="meal-table"></table>
+    </div>
+  </section>
+
+  <!-- INVOICE -->
+  <section id="panel-invoice" class="panel">
+    <h2 class="section-title">Hướng dẫn xuất hóa đơn di chuyển</h2>
+    <p class="section-sub">Sau mỗi chuyến đi bằng Green SM / Be trong lúc công tác, xuất hóa đơn VAT ngay trên app theo đúng thông tin công ty bên dưới để làm căn cứ quyết toán công tác phí.</p>
+
+    <div class="entity-grid">
+      <div class="entity-card">
+        <span class="tag">VNG Group</span>
+        <h4>CÔNG TY CỔ PHẦN TẬP ĐOÀN VNG</h4>
+        <div class="addr">Z06 Đường số 13, Phường Tân Thuận, Thành phố Hồ Chí Minh, Việt Nam</div>
+        <div class="mst">Mã số thuế: <b>0303490096</b></div>
+      </div>
+      <div class="entity-card">
+        <span class="tag">VNGGames</span>
+        <h4>Công ty TNHH VNGGames</h4>
+        <div class="addr">Tầng 2, Tòa nhà Saigon Paragon, số 3 Nguyễn Lương Bằng, phường Tân Mỹ, TP. Hồ Chí Minh, Việt Nam</div>
+        <div class="mst">Mã số thuế: <b>0319088834</b></div>
+      </div>
+      <div class="entity-card tbu">
+        <span class="tag">TBU</span>
+        <h4>Ký hợp đồng qua Talentnet</h4>
+        <div class="addr">Áp dụng cho các bạn Starter ký hợp đồng qua Talentnet — thông tin công ty sẽ cập nhật sau.</div>
+      </div>
+    </div>
+    <p class="section-sub" style="margin-top:-10px;">📌 Tùy vào hợp đồng lao động bạn ký với pháp nhân nào, chọn đúng thông tin công ty đó khi xuất hóa đơn. Email nhận hóa đơn thì điền email cá nhân của bạn.</p>
+
+    <div class="app-guide">
+      <div class="app-guide-head">
+        <span class="app-icon" style="background:#00b14f;">GSM</span>
+        <h3>Green SM</h3>
+      </div>
+      <div class="steps-row">
+        <div class="step-chip"><div class="num">1</div><div class="txt">Cá nhân → Hóa đơn</div></div>
+        <div class="step-chip"><div class="num">2</div><div class="txt">Search mã số thuế công ty</div></div>
+        <div class="step-chip"><div class="num">3</div><div class="txt">Kiểm tra đúng thông tin công ty</div></div>
+        <div class="step-chip"><div class="num">4</div><div class="txt">Trong chuyến đi, click vào góc phải</div></div>
+        <div class="step-chip"><div class="num">5</div><div class="txt">Tích/bật các nút xuất hóa đơn</div><div class="sub">Bảo hiểm là mục tùy chọn (optional)</div></div>
+      </div>
+    </div>
+
+    <div class="app-guide">
+      <div class="app-guide-head">
+        <span class="app-icon" style="background:#ffd400;color:#1c2b33;">Be</span>
+        <h3>Be</h3>
+      </div>
+      <div class="steps-row">
+        <div class="step-chip"><div class="num">1</div><div class="txt">Cá nhân → Cài đặt chuyến đi</div></div>
+        <div class="step-chip"><div class="num">2</div><div class="txt">Thông tin xuất hóa đơn</div></div>
+        <div class="step-chip"><div class="num">3</div><div class="txt">Kiểm tra đúng thông tin công ty</div></div>
+        <div class="step-chip"><div class="num">4</div><div class="txt">Khi đặt xe, click vào ⋯ góc phải</div></div>
+        <div class="step-chip"><div class="num">5</div><div class="txt">Tích/bật các nút xuất hóa đơn</div><div class="sub">Bảo hiểm là mục tùy chọn (optional)</div></div>
+      </div>
+    </div>
+
+    <div class="invoice-links">
+      <a class="btn" href="Hướng dẫn xuất hóa đơn di chuyển/Hướng dẫn xuất hóa đơn di chuyển.pdf" target="_blank" rel="noopener">⬇ Tải hướng dẫn đầy đủ (PDF, có hình chụp màn hình)</a>
+      <a class="btn ghost" href="https://canva.link/6onofzpi71emv0c" target="_blank" rel="noopener">🔗 Xem trên Canva</a>
     </div>
   </section>
 

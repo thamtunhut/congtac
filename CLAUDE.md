@@ -14,6 +14,14 @@ suất ăn. Deploy tại repo GitHub `thamtunhut/congtac` (public) — không c�
   `index.html` link tới bằng đường dẫn tương đối. **Luôn giữ thư mục này đi cùng
   index.html**, không đổi tên file trong này trừ khi cũng sửa lại `TICKETS[].file`
   trong JS.
+- `Hướng dẫn xuất hóa đơn di chuyển/` — nguồn cho tab "Hóa đơn": 1 file PDF (được
+  commit, link tải trong tab) + 10 ảnh chụp màn hình gốc dùng để dựng PDF đó (KHÔNG
+  commit, xem `.gitignore`, vì nội dung đã có đủ trong PDF). Nội dung tab "Hóa đơn"
+  (2 app Green SM/Be, bảng pháp nhân VNG Group/VNGGames/Talentnet) được gõ tay
+  thẳng vào HTML trong `<section id="panel-invoice">`, không phải data-driven như
+  các tab khác — nếu quy trình app đổi hoặc thêm pháp nhân mới, sửa trực tiếp HTML
+  ở đó (đọc lại PDF/ảnh gốc hoặc link Canva `https://canva.link/6onofzpi71emv0c`
+  nếu anh Vinh gửi bản cập nhật).
 - `Games ON_ Travel & Accommodation CTS.xlsx` — file Excel nguồn (KHÔNG commit lên
   git, xem `.gitignore`) do anh Vinh (VinhHP2) cập nhật. Có 3 sheet:
   - `Plan công tác` — danh sách người đi, ngày đi/về, check-in/out khách sạn.
