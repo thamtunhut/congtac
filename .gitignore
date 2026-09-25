@@ -2,10 +2,6 @@
 # giữ lại local để cập nhật, không commit lên repo public.
 Games ON_ Travel & Accommodation CTS.xlsx
 
-# Ảnh chụp màn hình gốc dùng để dựng file PDF hướng dẫn xuất hóa đơn — đã có đủ
-# nội dung trong file PDF (được commit), không cần trùng lặp thêm ~3MB ảnh rời.
-Hướng dẫn xuất hóa đơn di chuyển/*.jpg
-
 # OS / editor junk
 .DS_Store
 Thumbs.db

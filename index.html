@@ -379,7 +379,7 @@ tr.total-row td{font-weight:700;background:var(--bg);}
 .app-guide-head h3{margin:0;font-size:16px;}
 .steps-row{
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+  grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
   gap:10px;
   margin-top:14px;
 }
@@ -394,6 +394,18 @@ tr.total-row td{font-weight:700;background:var(--bg);}
   width:22px;height:22px;border-radius:50%;
   background:var(--teal);color:#fff;font-size:12px;font-weight:700;
   margin-bottom:8px;
+}
+.step-chip .step-img-link{display:block;margin-bottom:9px;}
+.step-chip .step-img{
+  width:100%;
+  aspect-ratio:9/16.5;
+  object-fit:cover;
+  object-position:top;
+  border-radius:8px;
+  border:1px solid var(--border);
+  background:#fff;
+  cursor:zoom-in;
+  display:block;
 }
 .step-chip .txt{font-size:13px;font-weight:600;line-height:1.35;}
 .step-chip .sub{font-size:11.5px;color:var(--muted);margin-top:3px;}
@@ -539,11 +551,6 @@ footer{
         <div class="addr">Tầng 2, Tòa nhà Saigon Paragon, số 3 Nguyễn Lương Bằng, phường Tân Mỹ, TP. Hồ Chí Minh, Việt Nam</div>
         <div class="mst">Mã số thuế: <b>0319088834</b></div>
       </div>
-      <div class="entity-card tbu">
-        <span class="tag">TBU</span>
-        <h4>Ký hợp đồng qua Talentnet</h4>
-        <div class="addr">Áp dụng cho các bạn Starter ký hợp đồng qua Talentnet — thông tin công ty sẽ cập nhật sau.</div>
-      </div>
     </div>
     <p class="section-sub" style="margin-top:-10px;">📌 Tùy vào hợp đồng lao động bạn ký với pháp nhân nào, chọn đúng thông tin công ty đó khi xuất hóa đơn. Email nhận hóa đơn thì điền email cá nhân của bạn.</p>
 
@@ -552,13 +559,7 @@ footer{
         <span class="app-icon" style="background:#00b14f;">GSM</span>
         <h3>Green SM</h3>
       </div>
-      <div class="steps-row">
-        <div class="step-chip"><div class="num">1</div><div class="txt">Cá nhân → Hóa đơn</div></div>
-        <div class="step-chip"><div class="num">2</div><div class="txt">Search mã số thuế công ty</div></div>
-        <div class="step-chip"><div class="num">3</div><div class="txt">Kiểm tra đúng thông tin công ty</div></div>
-        <div class="step-chip"><div class="num">4</div><div class="txt">Trong chuyến đi, click vào góc phải</div></div>
-        <div class="step-chip"><div class="num">5</div><div class="txt">Tích/bật các nút xuất hóa đơn</div><div class="sub">Bảo hiểm là mục tùy chọn (optional)</div></div>
-      </div>
+      <div class="steps-row" id="steps-greensm"></div>
     </div>
 
     <div class="app-guide">
@@ -566,13 +567,7 @@ footer{
         <span class="app-icon" style="background:#ffd400;color:#1c2b33;">Be</span>
         <h3>Be</h3>
       </div>
-      <div class="steps-row">
-        <div class="step-chip"><div class="num">1</div><div class="txt">Cá nhân → Cài đặt chuyến đi</div></div>
-        <div class="step-chip"><div class="num">2</div><div class="txt">Thông tin xuất hóa đơn</div></div>
-        <div class="step-chip"><div class="num">3</div><div class="txt">Kiểm tra đúng thông tin công ty</div></div>
-        <div class="step-chip"><div class="num">4</div><div class="txt">Khi đặt xe, click vào ⋯ góc phải</div></div>
-        <div class="step-chip"><div class="num">5</div><div class="txt">Tích/bật các nút xuất hóa đơn</div><div class="sub">Bảo hiểm là mục tùy chọn (optional)</div></div>
-      </div>
+      <div class="steps-row" id="steps-be"></div>
     </div>
 
     <div class="invoice-links">
@@ -879,6 +874,40 @@ function renderRooms(){
   `).join("");
 }
 renderRooms();
+
+/* ===================== RENDER: INVOICE GUIDE STEPS ===================== */
+const INVOICE_IMG_DIR = "Hướng dẫn xuất hóa đơn di chuyển/";
+const GREENSM_STEPS = [
+  {img:"1790334110297_1634521803667644721_7986163303576085323_98c8158735395f04df0eaa132e39f112.jpg", txt:"Cá nhân → Hóa đơn"},
+  {img:"1790334110262_1634521803667644721_7986163303576085323_58932a355522a48a27b42db1b67e9261.jpg", txt:"Search mã số thuế công ty"},
+  {img:"1790334110283_1634521803667644721_7986163303576085323_13ba871a01e78fbca11b682c00e64471.jpg", txt:"Kiểm tra đúng thông tin công ty"},
+  {img:"1790334110309_1634521803667644721_7986163303576085323_8232589d3fff8251ef006dfc88abea93.jpg", txt:"Trong chuyến đi, click vào góc phải"},
+  {img:"1790334110322_1634521803667644721_7986163303576085323_7847392c1e579a57bf823aa065ab2c27.jpg", txt:"Tích/bật các nút xuất hóa đơn", sub:"Bảo hiểm là mục tùy chọn (optional)"},
+];
+const BE_STEPS = [
+  {img:"1790334110333_1634521803667644721_7986163303576085323_6934d817570f9931dee79256ed84358d.jpg", txt:"Cá nhân → Cài đặt chuyến đi"},
+  {img:"1790334110343_1634521803667644721_7986163303576085323_5a00c8b98ec0bb36aa052f9c34b6ff91.jpg", txt:"Thông tin xuất hóa đơn"},
+  {img:"1790334110352_1634521803667644721_7986163303576085323_240afbf5b004741c8e9d9a2843e0ed51.jpg", txt:"Kiểm tra đúng thông tin công ty"},
+  {img:"1790334110361_1634521803667644721_7986163303576085323_2c6842eb6f1420516b9e3bc7247c7359.jpg", txt:"Khi đặt xe, click vào ⋯ góc phải"},
+  {img:"1790334110370_1634521803667644721_7986163303576085323_4eab682d825df8b11e904f4d75792bd8.jpg", txt:"Tích/bật các nút xuất hóa đơn", sub:"Bảo hiểm là mục tùy chọn (optional)"},
+];
+
+function renderSteps(containerId, steps){
+  document.getElementById(containerId).innerHTML = steps.map((s,i)=>{
+    const src = INVOICE_IMG_DIR.split("/").map(encodeURIComponent).join("/") + encodeURIComponent(s.img);
+    return `
+      <div class="step-chip">
+        <div class="num">${i+1}</div>
+        <a class="step-img-link" href="${src}" target="_blank" rel="noopener">
+          <img class="step-img" src="${src}" alt="Bước ${i+1}: ${s.txt}" loading="lazy">
+        </a>
+        <div class="txt">${s.txt}</div>
+        ${s.sub?`<div class="sub">${s.sub}</div>`:""}
+      </div>`;
+  }).join("");
+}
+renderSteps("steps-greensm", GREENSM_STEPS);
+renderSteps("steps-be", BE_STEPS);
 </script>
 </body>
 </html>
