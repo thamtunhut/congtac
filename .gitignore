@@ -1,0 +1,7 @@
+# Nguồn dữ liệu gốc — chứa nhiều thông tin nội bộ hơn mức cần thiết cho web,
+# giữ lại local để cập nhật, không commit lên repo public.
+Games ON_ Travel & Accommodation CTS.xlsx
+
+# OS / editor junk
+.DS_Store
+Thumbs.db

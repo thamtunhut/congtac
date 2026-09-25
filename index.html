@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Công tác Games ON – Hải Phòng</title>
+<style>
+:root{
+  --teal:#0f9aa4;
+  --teal-dark:#0b7a82;
+  --teal-light:#e6f6f7;
+  --orange:#f5a623;
+  --ink:#1c2b33;
+  --muted:#5c7079;
+  --border:#e1e8ea;
+  --bg:#f5f8f9;
+  --card:#ffffff;
+  --green:#1f9d55;
+  --red:#d64545;
+  --amber:#b8860b;
+  --radius:14px;
+  font-family:'Segoe UI',Arial,'Helvetica Neue',sans-serif;
+}
+*{box-sizing:border-box;}
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--ink);
+  line-height:1.5;
+}
+a{color:var(--teal-dark);}
+.hero{
+  background:linear-gradient(135deg,var(--teal) 0%,var(--teal-dark) 100%);
+  color:#fff;
+  padding:36px 20px 28px;
+}
+.hero-inner{max-width:1080px;margin:0 auto;}
+.hero-eyebrow{
+  text-transform:uppercase;
+  letter-spacing:1.5px;
+  font-size:12px;
+  opacity:.85;
+  font-weight:600;
+}
+.hero h1{
+  margin:6px 0 8px;
+  font-size:clamp(24px,4vw,34px);
+}
+.hero p{margin:0;opacity:.92;font-size:15px;max-width:640px;}
+.hero-stats{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  margin-top:20px;
+}
+.stat-chip{
+  background:rgba(255,255,255,.14);
+  border:1px solid rgba(255,255,255,.28);
+  border-radius:999px;
+  padding:8px 16px;
+  font-size:13px;
+  display:flex;
+  align-items:center;
+  gap:6px;
+}
+.stat-chip b{font-size:14px;}
+
+.tabs{
+  position:sticky;
+  top:0;
+  z-index:20;
+  background:#fff;
+  border-bottom:1px solid var(--border);
+  box-shadow:0 2px 8px rgba(0,0,0,.04);
+}
+.tabs-inner{
+  max-width:1080px;
+  margin:0 auto;
+  display:flex;
+  overflow-x:auto;
+}
+.tab-btn{
+  border:none;
+  background:none;
+  padding:16px 20px;
+  font-size:14.5px;
+  font-weight:600;
+  color:var(--muted);
+  cursor:pointer;
+  white-space:nowrap;
+  border-bottom:3px solid transparent;
+  transition:.15s;
+}
+.tab-btn:hover{color:var(--teal-dark);}
+.tab-btn.active{color:var(--teal-dark);border-bottom-color:var(--teal-dark);}
+
+main{max-width:1080px;margin:0 auto;padding:24px 20px 60px;}
+.panel{display:none;}
+.panel.active{display:block;animation:fade .25s ease;}
+@keyframes fade{from{opacity:0;transform:translateY(4px);}to{opacity:1;transform:none;}}
+
+h2.section-title{font-size:19px;margin:0 0 4px;}
+.section-sub{color:var(--muted);font-size:13.5px;margin:0 0 18px;}
+
+.toolbar{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-bottom:18px;
+}
+.search-input{
+  flex:1;
+  min-width:200px;
+  padding:10px 14px;
+  border:1px solid var(--border);
+  border-radius:10px;
+  font-size:14px;
+  background:#fff;
+}
+.search-input:focus{outline:2px solid var(--teal);outline-offset:-1px;}
+
+.filter-chip{
+  padding:8px 14px;
+  border-radius:999px;
+  border:1px solid var(--border);
+  background:#fff;
+  font-size:13px;
+  cursor:pointer;
+  color:var(--muted);
+  font-weight:600;
+}
+.filter-chip.active{background:var(--teal);border-color:var(--teal);color:#fff;}
+
+/* Overview cards */
+.people-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;}
+.person-card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:16px 18px;
+}
+.person-card .name-row{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;}
+.person-card .name{font-weight:700;font-size:15px;}
+.person-card .domain{color:var(--muted);font-size:12.5px;}
+.badge{
+  font-size:11px;
+  font-weight:700;
+  padding:3px 9px;
+  border-radius:999px;
+  white-space:nowrap;
+}
+.badge.tien-tram{background:#fdf0dd;color:var(--amber);}
+.badge.chinh{background:var(--teal-light);color:var(--teal-dark);}
+.dates-row{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  margin-top:12px;
+  font-size:13.5px;
+}
+.date-box{
+  background:var(--bg);
+  border-radius:8px;
+  padding:6px 10px;
+  text-align:center;
+}
+.date-box .d{font-weight:700;}
+.date-box .l{font-size:10.5px;color:var(--muted);text-transform:uppercase;}
+.arrow{color:var(--muted);}
+.nights-tag{margin-top:10px;font-size:12.5px;color:var(--muted);}
+.pending-tag{
+  display:inline-block;
+  margin-top:8px;
+  font-size:11.5px;
+  color:var(--red);
+  background:#fdeceb;
+  padding:3px 9px;
+  border-radius:999px;
+  font-weight:600;
+}
+
+/* Hotel */
+.hotel-card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:22px;
+  margin-bottom:18px;
+}
+.hotel-head{display:flex;justify-content:space-between;align-items:flex-start;gap:14px;flex-wrap:wrap;}
+.hotel-head h3{margin:0 0 4px;font-size:18px;}
+.hotel-head .addr{color:var(--muted);font-size:13.5px;}
+.status-pill{
+  font-size:12.5px;
+  font-weight:700;
+  padding:5px 12px;
+  border-radius:999px;
+}
+.status-pill.pending{background:#fef4e2;color:var(--amber);}
+.status-pill.confirmed{background:#e7f7ec;color:var(--green);}
+.hotel-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+  gap:14px;
+  margin-top:18px;
+}
+.hotel-fact .l{font-size:11.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;}
+.hotel-fact .v{font-size:14.5px;font-weight:600;margin-top:2px;}
+.hotel-note{
+  margin-top:16px;
+  background:var(--teal-light);
+  border-left:3px solid var(--teal);
+  padding:12px 14px;
+  border-radius:8px;
+  font-size:13.5px;
+  color:var(--teal-dark);
+}
+.room-section-title{
+  font-size:13px;
+  font-weight:700;
+  color:var(--muted);
+  text-transform:uppercase;
+  letter-spacing:.4px;
+  margin:22px 0 10px;
+}
+.room-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px;}
+.room-card{
+  background:var(--bg);
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:12px 14px;
+}
+.room-card .room-top{display:flex;justify-content:space-between;align-items:center;}
+.room-tag{
+  font-size:11px;
+  font-weight:700;
+  color:var(--teal-dark);
+  background:var(--teal-light);
+  padding:2px 9px;
+  border-radius:999px;
+}
+.room-card .members{margin-top:8px;font-size:13.5px;font-weight:600;line-height:1.4;}
+.room-card .range{margin-top:4px;font-size:12px;color:var(--muted);}
+.room-card .note{margin-top:6px;font-size:11.5px;color:var(--amber);}
+.room-card.solo{background:#fff;border-style:dashed;}
+.btn{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  background:var(--teal);
+  color:#fff !important;
+  text-decoration:none;
+  padding:9px 16px;
+  border-radius:9px;
+  font-size:13.5px;
+  font-weight:600;
+  border:none;
+  cursor:pointer;
+}
+.btn:hover{background:var(--teal-dark);}
+.btn.ghost{background:#fff;color:var(--teal-dark) !important;border:1px solid var(--teal);}
+
+/* Flights */
+.ticket-card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:18px 20px;
+  margin-bottom:14px;
+}
+.ticket-top{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:12px;}
+.pnr{
+  font-family:Consolas,Menlo,monospace;
+  font-weight:700;
+  background:var(--teal-light);
+  color:var(--teal-dark);
+  padding:4px 10px;
+  border-radius:8px;
+  font-size:13px;
+}
+.passenger-chips{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 14px;}
+.p-chip{
+  background:var(--bg);
+  border:1px solid var(--border);
+  border-radius:999px;
+  padding:4px 11px;
+  font-size:12.5px;
+}
+.leg{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  padding:10px 0;
+  border-top:1px dashed var(--border);
+  flex-wrap:wrap;
+}
+.leg:first-of-type{border-top:none;}
+.leg .fno{
+  font-size:11.5px;
+  font-weight:700;
+  color:var(--orange);
+  background:#fff6e6;
+  padding:3px 8px;
+  border-radius:6px;
+  min-width:66px;
+  text-align:center;
+}
+.leg .route{display:flex;align-items:center;gap:10px;font-size:14px;}
+.leg .route .time{font-weight:700;}
+.leg .route .code{font-size:11px;color:var(--muted);}
+.leg .date-tag{margin-left:auto;font-size:12.5px;color:var(--muted);}
+.leg-pending{
+  padding:10px 0;
+  border-top:1px dashed var(--border);
+  font-size:13px;
+  color:var(--red);
+}
+.leg-pending.no-return{
+  color:var(--muted);
+}
+.ticket-actions{margin-top:14px;}
+
+/* Meals */
+.meal-table-wrap{overflow-x:auto;border:1px solid var(--border);border-radius:var(--radius);background:#fff;}
+table.meal{border-collapse:collapse;width:100%;font-size:13px;min-width:760px;}
+table.meal th, table.meal td{padding:8px 10px;text-align:center;border-bottom:1px solid var(--border);}
+table.meal thead th{background:var(--teal-light);color:var(--teal-dark);font-size:12px;}
+table.meal td.name-cell, table.meal th.name-cell{
+  position:sticky;left:0;
+  background:#fff;
+  text-align:left;
+  font-weight:600;
+  z-index:2;
+  border-right:1px solid var(--border);
+  min-width:170px;
+}
+table.meal thead th.name-cell{background:var(--teal-light);z-index:3;}
+.mealdot{display:inline-block;width:9px;height:9px;border-radius:50%;}
+.mealdot.yes{background:var(--green);}
+.mealdot.no{background:#e2e6e8;}
+tr.total-row td{font-weight:700;background:var(--bg);}
+.meal-legend{display:flex;gap:18px;margin-bottom:14px;font-size:13px;color:var(--muted);align-items:center;}
+.meal-legend .item{display:flex;align-items:center;gap:6px;}
+
+footer{
+  text-align:center;
+  padding:28px 20px 40px;
+  color:var(--muted);
+  font-size:12.5px;
+}
+@media (max-width:600px){
+  .dates-row{flex-wrap:wrap;}
+}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-eyebrow">Chuyến công tác · Games ON</div>
+    <h1>Công tác Hải Phòng — Games ON</h1>
+    <p>Thông tin vé máy bay, khách sạn và suất ăn cho cả đoàn. Trang này tổng hợp từ file kế hoạch công tác — anh/chị bấm vào từng tab để xem chi tiết và tải vé của mình.</p>
+    <div class="hero-stats">
+      <div class="stat-chip">👥 <b>20</b>&nbsp;lượt đi (18 người)</div>
+      <div class="stat-chip">📍 Điểm đến: <b>Hải Phòng (HPH)</b></div>
+      <div class="stat-chip">🏨 <b>Wink Hai Phong Centre</b>, part of Unscripted by Hyatt</div>
+      <div class="stat-chip">🗓️ <b>27/09 – 12/10/2026</b></div>
+    </div>
+  </div>
+</div>
+
+<div class="tabs">
+  <div class="tabs-inner">
+    <button class="tab-btn active" data-tab="overview">Tổng quan</button>
+    <button class="tab-btn" data-tab="hotel">Khách sạn</button>
+    <button class="tab-btn" data-tab="flights">Vé máy bay</button>
+    <button class="tab-btn" data-tab="meals">Ăn uống</button>
+  </div>
+</div>
+
+<main>
+
+  <!-- OVERVIEW -->
+  <section id="panel-overview" class="panel active">
+    <h2 class="section-title">Danh sách đoàn</h2>
+    <p class="section-sub">Cả đoàn khởi hành theo nhiều đợt khác nhau trong khoảng 27/09 – 09/10, cùng bay về Sài Gòn ngày 12/10.</p>
+    <div class="toolbar">
+      <input class="search-input" id="overview-search" placeholder="🔍 Tìm theo tên hoặc domain...">
+    </div>
+    <div class="people-grid" id="people-grid"></div>
+  </section>
+
+  <!-- HOTEL -->
+  <section id="panel-hotel" class="panel">
+    <h2 class="section-title">Khách sạn</h2>
+    <p class="section-sub">Khách sạn chính đang được liên hệ đặt phòng, số phòng và danh sách ở ghép sẽ cập nhật khi có xác nhận.</p>
+
+    <div class="hotel-card">
+      <div class="hotel-head">
+        <div>
+          <h3>Wink Hai Phong Centre <span style="font-weight:400;color:var(--muted);font-size:13px;">— part of Unscripted by Hyatt</span></h3>
+          <div class="addr"><a href="https://maps.app.goo.gl/MpEwnu23TJvB7J9q7" target="_blank" rel="noopener">135 P. Điện Biên Phủ, Hải Phòng</a> · ☎ 0225 3669 966</div>
+        </div>
+        <span class="status-pill pending">Đang liên hệ đặt phòng</span>
+      </div>
+      <div class="hotel-grid">
+        <div class="hotel-fact"><div class="l">Thời gian ở</div><div class="v">02/10 – 12/10</div></div>
+        <div class="hotel-fact"><div class="l">Số phòng</div><div class="v">TBU</div></div>
+        <div class="hotel-fact"><div class="l">Check-in</div><div class="v">Theo ngày đến của từng người (xem tab Tổng quan)</div></div>
+      </div>
+      <div class="hotel-note">📌 Vì mỗi người bay đến Hải Phòng một ngày khác nhau (02/10 – 09/10) nên ngày check-in khách sạn của từng người cũng khác nhau — xem cột ngày đi ở tab <b>Tổng quan</b>. Ngày check-out dự kiến chung là <b>12/10</b>. Số phòng cụ thể sẽ được cập nhật ngay khi khách sạn xác nhận (tạm để TBU).</div>
+
+      <div class="room-section-title">Ghép phòng (số phòng: TBU)</div>
+      <div class="room-grid" id="room-grid"></div>
+
+      <div class="room-section-title" id="solo-title" style="display:none;">Chưa có người ghép cùng</div>
+      <div class="room-grid" id="solo-grid"></div>
+    </div>
+
+    <div class="hotel-card">
+      <div class="hotel-head">
+        <div>
+          <h3>Wink Hai Phong Centre — 27/09 &ndash; 28/09</h3>
+          <div class="addr"><a href="https://maps.app.goo.gl/MpEwnu23TJvB7J9q7" target="_blank" rel="noopener">135 P. Điện Biên Phủ, Hải Phòng</a> · ☎ 0225 3669 966</div>
+        </div>
+        <span class="status-pill confirmed">Đã xác nhận</span>
+      </div>
+      <div class="hotel-grid">
+        <div class="hotel-fact"><div class="l">Khách</div><div class="v">Ms Nguyễn Ngọc Khánh Linh &amp; Ms Trần Huỳnh Anh Thư</div></div>
+        <div class="hotel-fact"><div class="l">Loại phòng</div><div class="v">1 phòng · 2 Twin beds</div></div>
+        <div class="hotel-fact"><div class="l">Check-in</div><div class="v">27/09/2026 · 14:00</div></div>
+        <div class="hotel-fact"><div class="l">Check-out</div><div class="v">28/09/2026 · 14:00</div></div>
+        <div class="hotel-fact"><div class="l">Dịch vụ</div><div class="v">Ăn sáng &amp; VAT</div></div>
+        <div class="hotel-fact"><div class="l">Số booking</div><div class="v">Khanh Travel – 28751441</div></div>
+      </div>
+      <div class="hotel-note">⚠️ Điều kiện hủy phòng: <b>Không hoàn hủy</b>. Vui lòng mang CCCD/hộ chiếu khi nhận phòng.</div>
+      <div class="ticket-actions">
+        <a class="btn" href="Vé máy bay/Wink Hai Phong Centre - Ms Linh &amp; Ms Thu - CI 27.09 CO 28.09.pdf" target="_blank" rel="noopener">⬇ Tải phiếu xác nhận khách sạn</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FLIGHTS -->
+  <section id="panel-flights" class="panel">
+    <h2 class="section-title">Vé máy bay</h2>
+    <p class="section-sub">Vé được đặt theo nhóm (nhiều người/1 vé điện tử) — bấm tải vé để lưu file PDF gửi khi làm thủ tục. Chặng về (12/10) của một số người chưa xuất vé, sẽ cập nhật khi có.</p>
+    <div class="toolbar">
+      <input class="search-input" id="flight-search" placeholder="🔍 Tìm theo tên hoặc mã đặt chỗ...">
+    </div>
+    <div id="tickets-list"></div>
+  </section>
+
+  <!-- MEALS -->
+  <section id="panel-meals" class="panel">
+    <h2 class="section-title">Suất ăn (Trưa / Tối)</h2>
+    <p class="section-sub">Đăng ký suất ăn trưa/tối trong tuần sự kiện chính (05/10 – 11/10), tổng hợp từ danh sách đăng ký. Bữa sáng đã bao gồm trong khách sạn.</p>
+    <div class="meal-legend">
+      <div class="item"><span class="mealdot yes"></span> Có ăn</div>
+      <div class="item"><span class="mealdot no"></span> Không đăng ký</div>
+    </div>
+    <div class="meal-table-wrap">
+      <table class="meal" id="meal-table"></table>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  Trang tổng hợp thông tin công tác Games ON – Hải Phòng · Dữ liệu lấy từ "Games ON_ Travel &amp; Accommodation CTS.xlsx" và vé điện tử trong thư mục "Vé máy bay". Có sai sót vui lòng báo lại để cập nhật.
+</footer>
+
+<script>
+/* ===================== DATA ===================== */
+const TICKET_DIR = "Vé máy bay/";
+
+const FLIGHTS = {
+  VN6440: {no:"VN6440", dep:"SGN", arr:"HPH", depTime:"13:35", arrTime:"15:45", dur:"2h10"},
+  VN7184: {no:"VN7184", dep:"SGN", arr:"HPH", depTime:"11:20", arrTime:"13:25", dur:"2h05"},
+  VN7024: {no:"VN7024", dep:"SGN", arr:"HPH", depTime:"17:15", arrTime:"19:20", dur:"2h05"},
+  VN7185: {no:"VN7185", dep:"HPH", arr:"SGN", depTime:"14:00", arrTime:"15:55", dur:"1h55"},
+  VN1187: {no:"VN1187", dep:"HPH", arr:"SGN", depTime:"20:35", arrTime:"22:40", dur:"2h05"},
+};
+
+const TICKETS = [
+  {pnr:"FIIC3D", file:"FIIC3D-SGNHPH-27Sep26.pdf",
+   passengers:[{name:"Nguyễn Ngọc Khánh Linh"},{name:"Trần Huỳnh Anh Thư"}],
+   legs:[{flight:"VN6440",date:"27/09/2026"},{flight:"VN1187",date:"28/09/2026"}]},
+
+  {pnr:"EX8BF8", file:"EX8BF8_NGUYEN_NGOC_KHANH_LINH.pdf",
+   passengers:[{name:"Nguyễn Ngọc Khánh Linh"}],
+   legs:[{flight:"VN6440",date:"02/10/2026"},{flight:"VN7185",date:"12/10/2026"}]},
+
+  {pnr:"EXAGMP", file:"EXAGMP_TRAN_HUYNH_ANH_THU.pdf",
+   passengers:[{name:"Trần Huỳnh Anh Thư", returnStatus:"none"},{name:"Lê Trần Tú My", returnStatus:"pending"}],
+   legs:[{flight:"VN6440",date:"02/10/2026"}]},
+
+  {pnr:"EX8AYT", file:"EX8AYT_HO_PHU_VINH.pdf",
+   passengers:[{name:"Hồ Phú Vinh", returnStatus:"none"},{name:"Trương Quốc Huỳnh", returnStatus:"none"},{name:"Nguyễn Nữ Nguyệt Minh", returnStatus:"pending"}],
+   legs:[{flight:"VN7184",date:"03/10/2026"}]},
+
+  {pnr:"EX8WWU", file:"EX8WWU_NGUYEN_PHAN_HOANG_LINH.pdf",
+   passengers:[{name:"Nguyễn Phan Hoàng Linh"}],
+   legs:[{flight:"VN7184",date:"03/10/2026"},{flight:"VN7185",date:"12/10/2026"}]},
+
+  {pnr:"EX9EM2", file:"EX9EM2_LAM_MY_QUAN.pdf",
+   passengers:[{name:"Lâm Mỹ Quân", returnStatus:"pending"}],
+   legs:[{flight:"VN7184",date:"05/10/2026"}]},
+
+  {pnr:"EXALE9", file:"EXALE9_GIANG_THI_NGAN.pdf",
+   passengers:[{name:"Giang Thị Ngân"}],
+   legs:[{flight:"VN7184",date:"05/10/2026"},{flight:"VN7185",date:"12/10/2026"}]},
+
+  {pnr:"EXBHKT", file:"EXBHKT_HUYNH_DANG_KHOA.pdf",
+   passengers:[{name:"Huỳnh Đăng Khoa"},{name:"Đoàn Thanh Thúy Vân"},{name:"Nguyễn Trần Thảo Vy"}],
+   legs:[{flight:"VN7184",date:"06/10/2026"},{flight:"VN7185",date:"12/10/2026"}]},
+
+  {pnr:"EXBF4H", file:"EXBF4H_BUI_HA_XUAN_CHUC.pdf",
+   passengers:[{name:"Bùi Hà Xuân Chúc", returnStatus:"none"}],
+   legs:[{flight:"VN7184",date:"09/10/2026"}]},
+
+  {pnr:"EX9VDG", file:"EX9VDG_TRAN_NGOC_KHANH_VAN.pdf",
+   passengers:[{name:"Trần Ngọc Khánh Vân"},{name:"Nguyễn Trang Nhi"},{name:"Nguyễn Thị Ánh Tuyết"}],
+   legs:[{flight:"VN7024",date:"08/10/2026"},{flight:"VN7185",date:"12/10/2026"}]},
+
+  {pnr:"EX9UV9", file:"EX9UV9_TRAN_THI_KIM_NGAN.pdf",
+   passengers:[{name:"Trần Thị Kim Ngân"},{name:"Trần Đinh Trúc Nhi"}],
+   legs:[{flight:"VN7184",date:"09/10/2026"},{flight:"VN7185",date:"12/10/2026"}]},
+];
+
+const PEOPLE = [
+  {name:"Nguyễn Ngọc Khánh Linh", domain:"LinhNNK", phase:"advance", out:"27/09/2026", back:"28/09/2026", nights:1, pnr:"FIIC3D"},
+  {name:"Trần Huỳnh Anh Thư",     domain:"ThuTHA",   phase:"advance", out:"27/09/2026", back:"28/09/2026", nights:1, pnr:"FIIC3D"},
+
+  {name:"Nguyễn Ngọc Khánh Linh", domain:"LinhNNK",   phase:"main", out:"02/10/2026", back:"12/10/2026", nights:10, pnr:"EX8BF8"},
+  {name:"Lê Trần Tú My",          domain:"MyLTT",      phase:"main", out:"02/10/2026", back:"12/10/2026", nights:10, pnr:"EXAGMP", returnStatus:"pending"},
+  {name:"Trần Huỳnh Anh Thư",     domain:"ThuTHA",     phase:"main", out:"02/10/2026", back:"12/10/2026", nights:10, pnr:"EXAGMP", returnStatus:"none"},
+  {name:"Nguyễn Nữ Nguyệt Minh",  domain:"MinhNNN2",   phase:"main", out:"03/10/2026", back:"12/10/2026", nights:9,  pnr:"EX8AYT", returnStatus:"pending"},
+  {name:"Hồ Phú Vinh",            domain:"VinhHP2",    phase:"main", out:"03/10/2026", back:"12/10/2026", nights:9,  pnr:"EX8AYT", returnStatus:"none"},
+  {name:"Trương Quốc Huỳnh",      domain:"HuynhTQ2",   phase:"main", out:"03/10/2026", back:"12/10/2026", nights:9,  pnr:"EX8AYT", returnStatus:"none"},
+  {name:"Nguyễn Phan Hoàng Linh", domain:"LinhNPH",    phase:"main", out:"03/10/2026", back:"12/10/2026", nights:9,  pnr:"EX8WWU"},
+  {name:"Lâm Mỹ Quân",            domain:"QuanLM2",    phase:"main", out:"05/10/2026", back:"12/10/2026", nights:7,  pnr:"EX9EM2", returnStatus:"pending"},
+  {name:"Giang Thị Ngân",         domain:"V-ngangt",   phase:"main", out:"05/10/2026", back:"12/10/2026", nights:7,  pnr:"EXALE9"},
+  {name:"Bùi Hà Xuân Chúc",       domain:"ChucBHX2",   phase:"main", out:"09/10/2026", back:"12/10/2026", nights:3,  pnr:"EXBF4H", returnStatus:"none"},
+  {name:"Trần Đinh Trúc Nhi",     domain:"NhiTDT",     phase:"main", out:"09/10/2026", back:"12/10/2026", nights:3,  pnr:"EX9UV9"},
+  {name:"Trần Thị Kim Ngân",      domain:"Nganttk2",   phase:"main", out:"09/10/2026", back:"12/10/2026", nights:3,  pnr:"EX9UV9"},
+  {name:"Nguyễn Thị Ánh Tuyết",   domain:"Tuyetnta5",  phase:"main", out:"08/10/2026", back:"12/10/2026", nights:4,  pnr:"EX9VDG"},
+  {name:"Trần Ngọc Khánh Vân",    domain:"VanTNK",     phase:"main", out:"08/10/2026", back:"12/10/2026", nights:4,  pnr:"EX9VDG"},
+  {name:"Nguyễn Trang Nhi",       domain:"NhiNT7",     phase:"main", out:"08/10/2026", back:"12/10/2026", nights:4,  pnr:"EX9VDG"},
+  {name:"Đoàn Thanh Thúy Vân",    domain:"Vandtt",     phase:"main", out:"06/10/2026", back:"12/10/2026", nights:6,  pnr:"EXBHKT"},
+  {name:"Nguyễn Trần Thảo Vy",    domain:"Vyntt6",     phase:"main", out:"06/10/2026", back:"12/10/2026", nights:6,  pnr:"EXBHKT"},
+  {name:"Huỳnh Đăng Khoa",        domain:"Khoahd5",    phase:"main", out:"06/10/2026", back:"12/10/2026", nights:6,  pnr:"EXBHKT"},
+];
+
+const ROOMS = [
+  {members:["Nguyễn Ngọc Khánh Linh","Lê Trần Tú My"], range:"02/10 – 12/10"},
+  {members:["Trần Huỳnh Anh Thư","Nguyễn Nữ Nguyệt Minh"], range:"02/10 – 12/10", note:"Thư nhận phòng từ 02/10, Minh nhập phòng từ 03/10"},
+  {members:["Hồ Phú Vinh","Nguyễn Phan Hoàng Linh"], range:"03/10 – 12/10"},
+  {members:["Trương Quốc Huỳnh","Huỳnh Đăng Khoa"], range:"03/10 – 12/10", note:"Huỳnh nhận phòng từ 03/10, Khoa nhập phòng từ 06/10"},
+  {members:["Lâm Mỹ Quân","Giang Thị Ngân"], range:"05/10 – 12/10"},
+  {members:["Bùi Hà Xuân Chúc","Trần Đinh Trúc Nhi"], range:"09/10 – 12/10"},
+  {members:["Trần Thị Kim Ngân","Nguyễn Thị Ánh Tuyết"], range:"08/10 – 12/10", note:"Tuyết nhận phòng từ 08/10, Ngân nhập phòng từ 09/10"},
+  {members:["Trần Ngọc Khánh Vân","Nguyễn Trang Nhi"], range:"08/10 – 12/10"},
+  {members:["Đoàn Thanh Thúy Vân","Nguyễn Trần Thảo Vy"], range:"06/10 – 12/10"},
+];
+const SOLO_ROOMS = [];
+
+const MEAL_DAYS = [
+  {label:"T2 05/10", short:"5/10"},
+  {label:"T3 06/10", short:"6/10"},
+  {label:"T4 07/10", short:"7/10"},
+  {label:"T5 08/10", short:"8/10"},
+  {label:"T6 09/10", short:"9/10"},
+  {label:"T7 10/10", short:"10/10"},
+  {label:"CN 11/10", short:"11/10"},
+];
+
+// each value array = [Trưa,Tối] x7 days, keyed by domain (main-trip people only)
+const MEALS = {
+  "LinhNNK":  [true,true, true,true, true,true, true,true, true,true, true,true, true,true],
+  "MyLTT":    [true,true, true,true, true,true, true,true, true,true, true,true, true,true],
+  "ThuTHA":   [true,true, true,true, true,true, true,true, true,true, true,true, true,true],
+  "MinhNNN2": [true,true, true,true, true,true, true,true, true,true, true,true, true,true],
+  "VinhHP2":  [true,true, true,true, true,true, true,true, true,true, true,true, true,true],
+  "HuynhTQ2": [true,true, true,true, true,true, true,true, true,true, true,true, true,true],
+  "LinhNPH":  [true,true, true,true, true,true, true,true, true,true, true,true, true,true],
+  "QuanLM2":  [false,true, true,true, true,true, true,true, true,true, true,true, true,true],
+  "V-ngangt": [false,true, true,true, true,true, true,true, true,true, true,true, true,true],
+  "ChucBHX2": [false,false, false,false, false,false, false,false, true,true, true,true, true,true],
+  "NhiTDT":   [false,false, false,false, false,false, false,false, true,true, true,true, true,true],
+  "Nganttk2": [false,false, false,false, false,false, false,false, false,false, true,true, true,true],
+  "Tuyetnta5":[false,false, false,false, false,false, true,true, true,true, true,true, true,true],
+  "VanTNK":   [false,false, false,false, false,false, false,true, true,true, true,true, true,true],
+  "NhiNT7":   [false,false, false,false, false,false, true,true, true,true, true,true, true,true],
+  "Vandtt":   [false,false, true,true, true,true, true,true, true,true, true,true, true,true],
+  "Khoahd5":  [false,false, true,true, true,true, true,true, true,true, true,true, true,true],
+  "Vyntt6":   [false,false, true,true, true,true, true,true, true,true, true,true, true,true],
+};
+
+/* ===================== RENDER: TABS ===================== */
+document.querySelectorAll(".tab-btn").forEach(btn=>{
+  btn.addEventListener("click", ()=>{
+    document.querySelectorAll(".tab-btn").forEach(b=>b.classList.remove("active"));
+    document.querySelectorAll(".panel").forEach(p=>p.classList.remove("active"));
+    btn.classList.add("active");
+    document.getElementById("panel-"+btn.dataset.tab).classList.add("active");
+  });
+});
+
+/* ===================== RENDER: OVERVIEW ===================== */
+function ticketFor(pnr){ return TICKETS.find(t=>t.pnr===pnr); }
+
+function renderPeople(query){
+  const grid = document.getElementById("people-grid");
+  grid.innerHTML = "";
+  const q = (query||"").trim().toLowerCase();
+  PEOPLE.filter(p=>{
+    if(q && !(p.name.toLowerCase().includes(q) || p.domain.toLowerCase().includes(q))) return false;
+    return true;
+  }).forEach(p=>{
+    const card = document.createElement("div");
+    card.className = "person-card";
+    let pendingHtml = "";
+    if(p.returnStatus==="none") pendingHtml = '<div class="pending-tag" style="color:var(--muted);background:var(--bg);">Không book vé về</div>';
+    else if(p.returnStatus==="pending") pendingHtml = '<div class="pending-tag">Vé chiều về đang chờ xuất</div>';
+    card.innerHTML = `
+      <div class="name-row">
+        <div>
+          <div class="name">${p.name}</div>
+          <div class="domain">${p.domain}</div>
+        </div>
+      </div>
+      <div class="dates-row">
+        <div class="date-box"><div class="d">${p.out}</div><div class="l">Đi</div></div>
+        <span class="arrow">→</span>
+        <div class="date-box"><div class="d">${p.back}</div><div class="l">Về</div></div>
+      </div>
+      <div class="nights-tag">🌙 ${p.nights} đêm tại Hải Phòng · Mã đặt chỗ <b>${p.pnr}</b></div>
+      ${pendingHtml}
+    `;
+    grid.appendChild(card);
+  });
+}
+renderPeople("");
+
+document.getElementById("overview-search").addEventListener("input", e=>{
+  renderPeople(e.target.value);
+});
+
+/* ===================== RENDER: FLIGHTS ===================== */
+function renderTickets(query){
+  const wrap = document.getElementById("tickets-list");
+  wrap.innerHTML = "";
+  const q = (query||"").trim().toLowerCase();
+  TICKETS.filter(t=>{
+    if(!q) return true;
+    if(t.pnr.toLowerCase().includes(q)) return true;
+    return t.passengers.some(p=>p.name.toLowerCase().includes(q));
+  }).forEach(t=>{
+    const card = document.createElement("div");
+    card.className = "ticket-card";
+    const legsHtml = t.legs.map(leg=>{
+      const f = FLIGHTS[leg.flight];
+      return `
+        <div class="leg">
+          <span class="fno">${f.no}</span>
+          <div class="route">
+            <span><span class="time">${f.depTime}</span> <span class="code">${f.dep}</span></span>
+            <span>✈</span>
+            <span><span class="time">${f.arrTime}</span> <span class="code">${f.arr}</span></span>
+            <span class="code">(${f.dur})</span>
+          </div>
+          <span class="date-tag">${leg.date}</span>
+        </div>`;
+    }).join("");
+    const noneNames = t.passengers.filter(p=>p.returnStatus==="none").map(p=>p.name);
+    const pendingNames = t.passengers.filter(p=>p.returnStatus==="pending").map(p=>p.name);
+    let statusHtml = "";
+    if(noneNames.length) statusHtml += `<div class="leg-pending no-return">Không book vé về: ${noneNames.join(", ")}</div>`;
+    if(pendingNames.length) statusHtml += `<div class="leg-pending">⏳ Vé chiều về đang chờ xuất: ${pendingNames.join(", ")}</div>`;
+    const encodedFile = TICKET_DIR.split("/").map(encodeURIComponent).join("/") + encodeURIComponent(t.file);
+    card.innerHTML = `
+      <div class="ticket-top">
+        <div><span class="pnr">${t.pnr}</span> <span style="margin-left:8px;color:var(--muted);font-size:12.5px;">Vietnam Airlines</span></div>
+      </div>
+      <div class="passenger-chips">
+        ${t.passengers.map(p=>`<span class="p-chip">${p.name}</span>`).join("")}
+      </div>
+      ${legsHtml}
+      ${statusHtml}
+      <div class="ticket-actions">
+        <a class="btn" href="${encodedFile}" target="_blank" rel="noopener">⬇ Tải vé (PDF)</a>
+      </div>
+    `;
+    wrap.appendChild(card);
+  });
+}
+renderTickets("");
+document.getElementById("flight-search").addEventListener("input", e=>renderTickets(e.target.value));
+
+/* ===================== RENDER: MEALS ===================== */
+function renderMeals(){
+  const table = document.getElementById("meal-table");
+  let thead = `<thead><tr><th class="name-cell">Họ tên</th>`;
+  MEAL_DAYS.forEach(d=>{ thead += `<th colspan="2">${d.label}</th>`; });
+  thead += `</tr><tr><th class="name-cell"></th>`;
+  MEAL_DAYS.forEach(()=>{ thead += `<th>Trưa</th><th>Tối</th>`; });
+  thead += `</tr></thead>`;
+
+  // unique person list for the main trip, one row per domain
+  const seen = new Set();
+  const rows = [];
+  PEOPLE.filter(p=>p.phase==="main").forEach(p=>{
+    if(seen.has(p.domain)) return;
+    seen.add(p.domain);
+    rows.push(p);
+  });
+
+  let tbody = "<tbody>";
+  const totals = new Array(14).fill(0);
+  rows.forEach(p=>{
+    const flags = MEALS[p.domain] || new Array(14).fill(false);
+    tbody += `<tr><td class="name-cell">${p.name}<br><span style="font-weight:400;color:var(--muted);font-size:11.5px;">${p.domain}</span></td>`;
+    flags.forEach((f,i)=>{
+      if(f) totals[i]++;
+      tbody += `<td><span class="mealdot ${f?'yes':'no'}"></span></td>`;
+    });
+    tbody += `</tr>`;
+  });
+  tbody += `<tr class="total-row"><td class="name-cell">Tổng số suất</td>`;
+  totals.forEach(t=>{ tbody += `<td>${t}</td>`; });
+  tbody += `</tr></tbody>`;
+
+  table.innerHTML = thead + tbody;
+}
+renderMeals();
+
+/* ===================== RENDER: ROOMS ===================== */
+function renderRooms(){
+  const roomGrid = document.getElementById("room-grid");
+  roomGrid.innerHTML = ROOMS.map((r,i)=>`
+    <div class="room-card">
+      <div class="room-top">
+        <span class="room-tag">Phòng ${i+1} · TBU</span>
+      </div>
+      <div class="members">${r.members.join(" &amp; ")}</div>
+      <div class="range">${r.range}</div>
+      ${r.note?`<div class="note">${r.note}</div>`:""}
+    </div>
+  `).join("");
+
+  document.getElementById("solo-title").style.display = SOLO_ROOMS.length ? "" : "none";
+  const soloGrid = document.getElementById("solo-grid");
+  soloGrid.innerHTML = SOLO_ROOMS.map(r=>`
+    <div class="room-card solo">
+      <div class="room-top">
+        <span class="room-tag">Phòng riêng · TBU</span>
+      </div>
+      <div class="members">${r.members.join(", ")}</div>
+      <div class="range">${r.range}</div>
+    </div>
+  `).join("");
+}
+renderRooms();
+</script>
+</body>
+</html>
